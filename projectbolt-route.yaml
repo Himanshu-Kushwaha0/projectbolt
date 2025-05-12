@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: projectbolt-route
+  namespace: default
+spec:
+  gateways:
+  - projectbolt-gateway
+  hosts:
+  - "*"
+  http:
+  - match:
+    - uri:
+        prefix: "/"
+    route:
+    - destination:
+        host: projectbolt-service.default.svc.cluster.local
+        port:
+          number: 5173
+      weight: 33
+    - destination:
+        host: nextgen-service.default.svc.cluster.local
+        port:
+          number: 5173
+      weight: 33
+    - destination:
+        host: wordgen-service.default.svc.cluster.local
+        port:
+          number: 5173
+      weight: 34
